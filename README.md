@@ -1,6 +1,6 @@
 ### New Jersey Institute of Technology
 ### IS601 - 851
-### Databse Homework
+### Database Homework
 ### Mykola Lupak
 
 ### Homework Description 
