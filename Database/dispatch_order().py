@@ -1,9 +1,10 @@
 from sqlalchemy import update
 from sqlalchemy.exc import IntegrityError
+from sqlalchemy.exc import Order
 from datetime import datetime
  
  
-def dispatch_order(order_id):
+def dispatch_order(session, order_id):
  
     # check whether order_id is valid or not
     order = session.query(Order).get(order_id)
@@ -28,7 +29,3 @@ def dispatch_order(order_id):
         print("Rolling back ...")
         session.rollback()
         print("Transaction failed.")
-
-dispatch_order(1)
-
-dispatch_order(2)
