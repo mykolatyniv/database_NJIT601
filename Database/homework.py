@@ -1,5 +1,7 @@
+import sqlite3
 from sqlalchemy.orm import create_engine, Session
-engine = create_engine("postgres+psycopg2://postgres:pass@localhost/mydb")
+engine = create_engine('sqlite:////web/Sqlite-Data/example.db')
+
 session = Session(bind=engine)
 
 from sqlalchemy.orm import sessionmaker, Session
@@ -22,23 +24,12 @@ c2 = Customer(first_name = 'Scott',
               address = '424 Patterson Street',
               town = 'Beckinsdale'
              )
-c1, c2
-
-c1.first_name, c1.last_name
-c2.first_name, c2.last_name
-
 session.add(c1)
 session.add(c2)
 
 session.add_all([c1, c2])
 
-session.new
-
 session.commit()
-
-c1.id, c2.id
-
-c1.orders, c2.orders
 
 c3 = Customer(
             first_name = "John", 
@@ -98,8 +89,7 @@ line_item3 = OrderLine(order = o2, item = i1, quantity =  1)
 line_item3 = OrderLine(order = o2, item = i2, quantity =  4)
  
 session.add_all([o1, o2])
- 
-session.new
+
 session.commit()
 
 o3 = Order(customer = c1)
@@ -112,15 +102,6 @@ o3.order_lines.append(orderline2)
 session.add_all([o3])
  
 session.commit()
-
-c1.orders
-
-o1.customer
-
-c1.orders[0].order_lines, c1.orders[1].order_lines
-
-for ol in c1.orders[0].order_lines:
-    ol.id, ol.item, ol.quantity
     
 print('-------')
     
@@ -282,7 +263,6 @@ session.query(Item).filter(
 session.commit()
 
 i = session.query(Item).filter(Item.name == 'Monitor').one()
-i
 session.delete(i)
 session.commit()
 
