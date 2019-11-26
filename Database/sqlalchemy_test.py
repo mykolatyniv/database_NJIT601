@@ -39,20 +39,20 @@ class Address(Base):
 class Customer(Base):
     __tablename__ = 'customers'
     id = Column(Integer, primary_key=True)
-    first_name = Column(String(25))
-    last_name = Column(String(25))
-    username = Column(String(25))
-    email = Column(String(25))
-    address = Column(String(25))
-    town = Column(String(25))
+    first_name = Column(String(250))
+    last_name = Column(String(250))
+    username = Column(String(250))
+    email = Column(String(250))
+    address = Column(String(250))
+    town = Column(String(250))
     Address = relationship("Address", backref='customer')
 
 class Item(Base):
     __tablename__ = 'items'
     id = Column(Integer(), primary_key=True)
-    name = Column(String(25))
-    cost_price = Column(Numeric())
-    selling_price = Column(Numeric())
+    name = Column(String(250))
+    cost_price = Column(String(250))
+    selling_price = Column(String(250))
     quantity = Column(Integer())
     Customer = relationship("Customer", backref='item')
 
@@ -60,12 +60,15 @@ class Order(Base):
     __tablename__ = 'orders'
     id = Column(Integer(), primary_key=True)
     Item = relationship("Item", backref='order')
+    quantity = Column(String(250))
+    Item = relationship("Item", backref='orders')
 
 class OrdersLine(Base):
     __tablename__ = 'order_lines'
     id = Column(Integer(), primary_key=True)
-    item = Column(Integer())
-    quantity = Column(Integer())
+    order = Column(String(250))
+    item = Column(String(250))
+    quantity = Column(String(250))
     order = relationship("Order", backref='order_lines')
 
 # Create all tables in the engine. This is equivalent to "Create Table"
