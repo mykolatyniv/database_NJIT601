@@ -63,7 +63,7 @@ class Order(Base):
     quantity = Column(String(250))
     item = relationship("Items", backref='orders')
 
-class OrdersLine(Base):
+class OrderLine(Base):
     __tablename__ = 'order_lines'
     id = Column(Integer(), primary_key=True)
     order = Column(String(250))

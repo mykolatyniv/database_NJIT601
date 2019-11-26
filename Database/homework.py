@@ -1,6 +1,6 @@
 from sqlalchemy.orm import create_engine, Session
 from dispatch_order() import dispatch_order
-from sqlalchemy_test import Customer, Item, Order, OrdersLine
+from sqlalchemy_test import Customer, Item, Order, OrderLine
 from sqlalchemy import func
 from sqlalchemy import text
 from sqlalchemy import cast, Date, distinct, union
@@ -27,17 +27,11 @@ c2 = Customer(first_name = 'Scott',
               address = '424 Patterson Street',
               town = 'Beckinsdale'
              )
-c1, c2
-c1.first_name, c1.last_name
-c2.first_name, c2.last_name
+
 session.add(c1)
 session.add(c2)
-c1.id, c2.id
 session.add_all([c1, c2])
-session.new
 session.commit()
-c1.id, c2.id
-c1.orders, c2.orders
 
 c3 = Customer(
             first_name = "John", 
