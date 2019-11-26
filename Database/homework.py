@@ -8,11 +8,8 @@ from sqlalchemy import text
 from sqlalchemy import cast, Date, distinct, union
 from sqlalchemy import distinct
 from sqlalchemy import desc
-
-
 from sqlalchemy.orm import sessionmaker, Session
 Session = sessionmaker(bind=engine)
-
 session = Session()
 
 c1 = Customer(first_name = 'Toby', 
@@ -30,9 +27,12 @@ c2 = Customer(first_name = 'Scott',
               address = '424 Patterson Street',
               town = 'Beckinsdale'
              )
+c1, c2
+c1.first_name, c1.last_name
+c2.first_name, c2.last_name
 session.add(c1)
 session.add(c2)
-
+c1.id, c2.id
 session.add_all([c1, c2])
 session.new
 session.commit()
