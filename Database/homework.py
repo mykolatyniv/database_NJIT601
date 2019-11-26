@@ -1,8 +1,14 @@
 import sqlite3
 from sqlalchemy.orm import create_engine, Session
 engine = create_engine('sqlite:////web/Sqlite-Data/example.db')
-from sqlite_create import Customer, Order, OrderLine, Item
 session = Session(bind=engine)
+from sqlite_create import Customer, Order, OrderLine, Item
+from sqlalchemy import func
+from sqlalchemy import text
+from sqlalchemy import cast, Date, distinct, union
+from sqlalchemy import distinct
+from sqlalchemy import desc
+
 
 from sqlalchemy.orm import sessionmaker, Session
 Session = sessionmaker(bind=engine)
@@ -28,8 +34,10 @@ session.add(c1)
 session.add(c2)
 
 session.add_all([c1, c2])
-
+session.new
 session.commit()
+c1.id, c2.id
+c1.orders, c2.orders
 
 c3 = Customer(
             first_name = "John", 
@@ -102,6 +110,12 @@ o3.order_lines.append(orderline2)
 session.add_all([o3])
  
 session.commit()
+
+c1.orders
+o1.customer
+c1.orders[0].order_lines, c1.orders[1].order_lines
+for ol in c1.orders[0].order_lines:
+    ol.id, ol.item, ol.quantity
     
 print('-------')
     
@@ -132,12 +146,8 @@ session.query(Item).get(1)
 session.query(Order).get(100)
 
 session.query(Customer).filter(Customer.first_name == 'John').all()
-
 print(session.query(Customer).filter(Customer.first_name == 'John'))
-
- 	
 session.query(Customer).filter(Customer.id <= 5, Customer.town == "Norfolk").all()
-
 print(session.query(Customer).filter(Customer.id <= 5, Customer.town.like("Nor%"))
 
 # find all customers who either live in Peterbrugh or Norfolk
@@ -181,7 +191,6 @@ print(session.query(Customer).limit(2).offset(2))
 session.query(Item).filter(Item.name.ilike("wa%")).all()
 session.query(Item).filter(Item.name.ilike("wa%")).order_by(Item.cost_price).all()
 
-from sqlalchemy import desc
 session.query(Item).filter(Item.name.ilike("wa%")).order_by(desc(Item.cost_price)).all()
 
 session.query(Customer).join(Order).all()
@@ -210,7 +219,6 @@ session.query(
     Order.id,
 ).outerjoin(Order, full=True).all()
 
-from sqlalchemy import func
  
 session.query(func.count(Customer.id)).join(Order).filter(
     Customer.first_name == 'John',
@@ -224,8 +232,6 @@ session.query(
     func.count("*").label('town_count'),    
     Customer.town
 ).group_by(Customer.town).having(func.count("*") > 2).all()
-
-from sqlalchemy import distinct
  
 session.query(Customer.town).filter(Customer.id  < 10).all()
 session.query(Customer.town).filter(Customer.id  < 10).distinct().all()
@@ -234,8 +240,6 @@ session.query(
     func.count(distinct(Customer.town)),
     func.count(Customer.town)
 ).all()
-
-from sqlalchemy import cast, Date, distinct, union
  
 session.query(
     cast(func.pi(), Integer),
@@ -269,8 +273,6 @@ session.commit()
 session.query(Item).filter(
     Item.name.ilike("W%")
 ).delete(synchronize_session='fetch')
-
-from sqlalchemy import text
  
 session.query(Customer).filter(text("first_name = 'John'")).all()
  
