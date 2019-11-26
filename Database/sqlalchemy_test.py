@@ -61,7 +61,7 @@ class Order(Base):
     id = Column(Integer(), primary_key=True)
     Item = relationship("Item", backref='order')
     quantity = Column(String(250))
-    Item = relationship("Item", backref='orders')
+    items = relationship("Items", backref='orders')
 
 class OrdersLine(Base):
     __tablename__ = 'order_lines'
@@ -69,7 +69,7 @@ class OrdersLine(Base):
     order = Column(String(250))
     item = Column(String(250))
     quantity = Column(String(250))
-    order = relationship("Order", backref='order_lines')
+    Order = relationship("Order", backref='order_lines')
 
 # Create all tables in the engine. This is equivalent to "Create Table"
 # statements in raw SQL.
