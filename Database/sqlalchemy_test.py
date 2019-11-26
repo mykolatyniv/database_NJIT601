@@ -45,7 +45,7 @@ class Customer(Base):
     email = Column(String(250))
     address = Column(String(250))
     town = Column(String(250))
-    address = relationship("Address", backref='customers')
+    Address = relationship("Address", backref='customers')
 
 class Item(Base):
     __tablename__ = 'items'
