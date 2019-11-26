@@ -1,7 +1,5 @@
 import sqlite3
 from sqlalchemy.orm import create_engine, Session
-engine = create_engine('sqlite:////web/Sqlite-Data/example.db')
-session = Session(bind=engine)
 from sqlite_create import Customer, Item, Order, OrderLine
 from sqlalchemy import func
 from sqlalchemy import text
@@ -9,6 +7,8 @@ from sqlalchemy import cast, Date, distinct, union
 from sqlalchemy import distinct
 from sqlalchemy import desc
 from sqlalchemy.orm import sessionmaker, Session
+engine = create_engine('sqlite:////web/Sqlite-Data/example.db')
+session = Session(bind=engine)
 Session = sessionmaker(bind=engine)
 session = Session()
 
