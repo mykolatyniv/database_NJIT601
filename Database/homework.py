@@ -1,7 +1,7 @@
 import sqlite3
 from sqlalchemy.orm import create_engine, Session
 engine = create_engine('sqlite:////web/Sqlite-Data/example.db')
-
+from sqlite_create import Customer, Order, OrderLine, Item
 session = Session(bind=engine)
 
 from sqlalchemy.orm import sessionmaker, Session
@@ -86,7 +86,7 @@ o2 = Order(customer = c1)
 line_item1 = OrderLine(order = o1, item = i1, quantity =  3)
 line_item2 = OrderLine(order = o1, item = i2, quantity =  2)
 line_item3 = OrderLine(order = o2, item = i1, quantity =  1)
-line_item3 = OrderLine(order = o2, item = i2, quantity =  4)
+line_item4 = OrderLine(order = o2, item = i2, quantity =  4)
  
 session.add_all([o1, o2])
 
