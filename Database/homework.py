@@ -1,5 +1,5 @@
-import sqlite3
 from sqlalchemy.orm import create_engine, Session
+from dispatch_order() import dispatch_order
 from sqlalchemy_test import Customer, Item, Order, OrderLine
 from sqlalchemy import func
 from sqlalchemy import text
@@ -282,3 +282,6 @@ session.query(Customer).filter(text("town like 'Nor%'")).order_by(text("first_na
 
 
 session.commit()
+
+dispatch_order(1)
+dispatch_order(2)
