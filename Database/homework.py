@@ -10,7 +10,6 @@ from sqlalchemy.orm import sessionmaker, Session
 engine = create_engine('sqlite:////web/Sqlite-Data/example.db')
 session = Session(bind=engine)
 Session = sessionmaker(bind=engine)
-session = Session()
 
 c1 = Customer(first_name = 'Toby', 
               last_name = 'Miller', 
@@ -104,17 +103,11 @@ o3.order_lines.append(orderline2)
 session.add_all([o3])
  
 session.commit()
-
-c1.orders
-o1.customer
-c1.orders[0].order_lines, c1.orders[1].order_lines
 for ol in c1.orders[0].order_lines:
-    ol.id, ol.item, ol.quantity
     
 print('-------')
     
 for ol in c1.orders[1].order_lines:
-    ol.id, ol.item, ol.quantity
 
 session.query(Customer).all()
 
