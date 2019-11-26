@@ -2,7 +2,6 @@ from sqlalchemy_test import Order
 from sqlalchemy.exc import IntegrityError
 from datetime import datetime
  
- 
 def dispatch_order(session, order_id):
  
     # check whether order_id is valid or not
