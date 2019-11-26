@@ -1,6 +1,6 @@
 import sqlite3
 from sqlalchemy.orm import create_engine, Session
-from sqlite_create import Customer, Item, Order, OrderLine
+from sqlalchemy_test import Customer, Item, Order, OrderLine
 from sqlalchemy import func
 from sqlalchemy import text
 from sqlalchemy import cast, Date, distinct, union
