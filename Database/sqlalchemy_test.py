@@ -34,7 +34,7 @@ class Address(Base):
     # creates the field to store the person id
     person_id = Column(Integer, ForeignKey('person.id'))
     # creates the relationship between the person and addresses.  backref adds a property to the Person class to retrieve addresses
-    person = relationship("Person", backref="addresses")
+    person = relationship("Person", backref="address")
 
 class Customer(Base):
     __tablename__ = 'customers'
@@ -45,7 +45,7 @@ class Customer(Base):
     email = Column(String(250))
     address = Column(String(250))
     town = Column(String(250))
-    Address = relationship("Address", backref='customer')
+    address = relationship("Address", backref='customers')
 
 class Item(Base):
     __tablename__ = 'items'
@@ -54,14 +54,14 @@ class Item(Base):
     cost_price = Column(String(250))
     selling_price = Column(String(250))
     quantity = Column(Integer())
-    Customer = relationship("Customer", backref='item')
+    customers = relationship("Customer", backref='items')
 
 class Order(Base):
     __tablename__ = 'orders'
     id = Column(Integer(), primary_key=True)
     Item = relationship("Item", backref='order')
     quantity = Column(String(250))
-    items = relationship("Items", backref='orders')
+    item = relationship("Items", backref='orders')
 
 class OrdersLine(Base):
     __tablename__ = 'order_lines'
@@ -69,7 +69,7 @@ class OrdersLine(Base):
     order = Column(String(250))
     item = Column(String(250))
     quantity = Column(String(250))
-    Order = relationship("Order", backref='order_lines')
+    orders = relationship("Order", backref='order_lines')
 
 # Create all tables in the engine. This is equivalent to "Create Table"
 # statements in raw SQL.
