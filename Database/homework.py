@@ -1,16 +1,13 @@
 from sqlalchemy.orm import create_engine, Session
 from dispatch_order() import dispatch_order
 from sqlalchemy_test import Customer, Item, Order, OrderLine
-from sqlalchemy import func
 from sqlalchemy import text
-from sqlalchemy import cast, Date, distinct, union
-from sqlalchemy import distinct
-from sqlalchemy import desc
 from sqlalchemy.orm import sessionmaker, Session
 
 engine = create_engine('sqlite:////web/Sqlite-Data/example.db')
 session = Session(bind=engine)
 Session = sessionmaker(bind=engine)
+session = Session()
 
 c1 = Customer(first_name = 'Toby', 
               last_name = 'Miller', 
@@ -28,11 +25,16 @@ c2 = Customer(first_name = 'Scott',
               town = 'Beckinsdale'
              )
 
+c1.first_name, c1.last_name
+c2.first_name, c2.last_name
 session.add(c1)
 session.add(c2)
+c1.id, c2.id
 session.add_all([c1, c2])
+session.new
 session.commit()
-
+c1.id, c2.id
+c1.orders, c2.orders
 c3 = Customer(
             first_name = "John", 
             last_name = "Lara", 
@@ -91,7 +93,7 @@ line_item3 = OrderLine(order = o2, item = i1, quantity =  1)
 line_item4 = OrderLine(order = o2, item = i2, quantity =  4)
  
 session.add_all([o1, o2])
-
+session.new
 session.commit()
 
 o3 = Order(customer = c1)
@@ -104,11 +106,15 @@ o3.order_lines.append(orderline2)
 session.add_all([o3])
  
 session.commit()
+c1.orders
+o1.customer
+c1.orders[0].order_lines, c1.orders[1].order_lines
 for ol in c1.orders[0].order_lines:
-    
+    ol.id, ol.item, ol.quantity
 print('-------')
     
 for ol in c1.orders[1].order_lines:
+    ol.id, ol.item, ol.quantity
 
 session.query(Customer).all()
 
@@ -178,7 +184,7 @@ session.query(Customer).limit(2).offset(2).all()
 print(session.query(Customer).limit(2).offset(2))
 session.query(Item).filter(Item.name.ilike("wa%")).all()
 session.query(Item).filter(Item.name.ilike("wa%")).order_by(Item.cost_price).all()
-
+from sqlalchemy import desc
 session.query(Item).filter(Item.name.ilike("wa%")).order_by(desc(Item.cost_price)).all()
 
 session.query(Customer).join(Order).all()
@@ -207,7 +213,7 @@ session.query(
     Order.id,
 ).outerjoin(Order, full=True).all()
 
- 
+from sqlalchemy import func
 session.query(func.count(Customer.id)).join(Order).filter(
     Customer.first_name == 'John',
     Customer.last_name == 'Green',    
@@ -220,7 +226,7 @@ session.query(
     func.count("*").label('town_count'),    
     Customer.town
 ).group_by(Customer.town).having(func.count("*") > 2).all()
- 
+from sqlalchemy import distinct
 session.query(Customer.town).filter(Customer.id  < 10).all()
 session.query(Customer.town).filter(Customer.id  < 10).distinct().all()
  
@@ -228,7 +234,7 @@ session.query(
     func.count(distinct(Customer.town)),
     func.count(Customer.town)
 ).all()
- 
+from sqlalchemy import cast, Date, distinct, union
 session.query(
     cast(func.pi(), Integer),
     cast(func.pi(), Numeric(10,2)),
