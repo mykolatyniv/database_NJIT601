@@ -63,7 +63,6 @@ class Item(Base):
 class Order(Base):
     __tablename__ = 'orders'
     id = Column(Integer(), primary_key=True)
-    Item = relationship("Item", backref='order')
     quantity = Column(String(250), nullable=False)
     item = relationship("Items", backref='orders')
 
