@@ -3,6 +3,8 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from xmlrpc.client import DateTime
+from datetime import datetime
 from pprint import pprint
 
 # Create an engine that stores data in the local directory's
@@ -39,36 +41,38 @@ class Address(Base):
 class Customer(Base):
     __tablename__ = 'customers'
     id = Column(Integer, primary_key=True)
-    first_name = Column(String(250))
-    last_name = Column(String(250))
-    username = Column(String(250))
-    email = Column(String(250))
-    address = Column(String(250))
-    town = Column(String(250))
-    Address = relationship("Address", backref='customers')
+    first_name = Column(String(250), nullable=False)
+    last_name = Column(String(250), nullable=False)
+    username = Column(String(250), nullable=False)
+    email = Column(String(250), nullable=False)
+    address = Column(String(250), nullable=False)
+    town = Column(String(250), nullable=False)
+    created_on = Column(DateTime(), default=datetime.now)
+    updated_on = Column(DateTime(), default=datetime.now, onupdate=datetime.now)
+    orders = relationship("Order", backref='customers')
 
 class Item(Base):
     __tablename__ = 'items'
     id = Column(Integer(), primary_key=True)
-    name = Column(String(250))
-    cost_price = Column(String(250))
-    selling_price = Column(String(250))
-    quantity = Column(Integer())
+    name = Column(String(250), nullable=False)
+    cost_price = Column(String(250), nullable=False)
+    selling_price = Column(String(250), nullable=False)
+    quantity = Column(Integer(), nullable=False)
     customers = relationship("Customer", backref='items')
 
 class Order(Base):
     __tablename__ = 'orders'
     id = Column(Integer(), primary_key=True)
     Item = relationship("Item", backref='order')
-    quantity = Column(String(250))
+    quantity = Column(String(250), nullable=False)
     item = relationship("Items", backref='orders')
 
 class OrderLine(Base):
     __tablename__ = 'order_lines'
     id = Column(Integer(), primary_key=True)
-    order = Column(String(250))
-    item = Column(String(250))
-    quantity = Column(String(250))
+    order = Column(String(250), nullable=False)
+    item = Column(String(250), nullable=False)
+    quantity = Column(String(250), nullable=False)
     orders = relationship("Order", backref='order_lines')
 
 # Create all tables in the engine. This is equivalent to "Create Table"
