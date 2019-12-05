@@ -1,6 +1,5 @@
 ### New Jersey Institute of Technology
 ### IS601 - 851
-### Database MiniProject
 ### Mykola Lupak
 
 ### Homework Description 
