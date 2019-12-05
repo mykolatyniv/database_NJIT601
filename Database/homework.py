@@ -1,7 +1,6 @@
 from sqlalchemy.orm import create_engine, Session
 from dispatch_order() import dispatch_order
 from sqlalchemy_test import Customer, Item, Order, OrderLine
-from sqlalchemy import text
 from sqlalchemy.orm import sessionmaker, Session
 
 engine = create_engine('sqlite:////web/Sqlite-Data/example.db')
@@ -234,7 +233,7 @@ session.query(
     func.count(distinct(Customer.town)),
     func.count(Customer.town)
 ).all()
-from sqlalchemy import cast, Date, distinct, union
+from sqlalchemy import cast, Date, distinct, union, Integer, Numeric, DateTime
 session.query(
     cast(func.pi(), Integer),
     cast(func.pi(), Numeric(10,2)),
@@ -267,15 +266,12 @@ session.commit()
 session.query(Item).filter(
     Item.name.ilike("W%")
 ).delete(synchronize_session='fetch')
- 
+from sqlalchemy import text
 session.query(Customer).filter(text("first_name = 'John'")).all()
  
 session.query(Customer).filter(text("town like 'Nor%'")).all()
  
 session.query(Customer).filter(text("town like 'Nor%'")).order_by(text("first_name, id desc")).all()
-
-
-session.commit()
 
 dispatch_order(1)
 dispatch_order(2)
