@@ -158,7 +158,6 @@ session.query(Customer).filter(and_(
     Customer.town == 'Norfolk'
 )).all()
  
- 
 # find all johns who don't live in Peterbrugh
  
 session.query(Customer).filter(and_(
